@@ -1,0 +1,264 @@
+---
+openapi: 3.0.0
+info:
+  title: PlatformAPI
+  description: |
+    API de la plataforma web
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/javierrome/PlatformAPI/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: statistics
+  description: Todo sobre tus estadísticas de actividad
+- name: user
+  description: Operaciones sobre el usuario
+paths:
+  /statistics/{userId}:
+    get:
+      tags:
+      - statistics
+      summary: Devuelve las estadísticas de actividad de un usuario
+      operationId: getActivityStatistics
+      parameters:
+      - name: userId
+        in: path
+        description: id del usuario cuyas estadísticas se van consultar
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: estadisticas encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+        "404":
+          description: estadisticas no encontradas en el sistema
+  /statistics/device/{deviceId}:
+    post:
+      tags:
+      - statistics
+      summary: añade un nuevo dispositivo a la cuenta
+      operationId: postDevice
+      parameters:
+      - name: deviceId
+        in: path
+        description: id del dispositivo añadido
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+      responses:
+        "200":
+          description: dispositivo añadido
+        "400":
+          description: datos del dispositivo incorrectos
+  /statistics/device/liveTime/{deviceId}:
+    get:
+      tags:
+      - statistics
+      summary: Devuelve posición actual del dispositivo
+      operationId: getLiveTimePosition
+      parameters:
+      - name: deviceId
+        in: path
+        description: id del dispositivo del que se quiere obtener la localización
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: dispositivo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        "404":
+          description: dispositivo no encontrado en el sistema
+  /user:
+    post:
+      tags:
+      - user
+      summary: Crea un nuevo usuario en el sistema
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Obtiene el usuario por el nombre de usuario
+      operationId: getUserByName
+      parameters:
+      - name: username
+        in: path
+        description: nombre de usuario
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Nombre de usuario no valido
+        "404":
+          description: Usuario no encontrado
+    put:
+      tags:
+      - user
+      summary: Actualiza los datos del usuario
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: nombre del usuario que va a ser actualizado
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Usuario actualizado
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "400":
+          description: Usuario no valido
+        "404":
+          description: Usuario no encontrado
+components:
+  schemas:
+    Position:
+      required:
+      - date
+      - device
+      - lat
+      - lon
+      type: object
+      properties:
+        device:
+          type: integer
+          format: int64
+          example: 12345
+        lat:
+          type: string
+          example: 38.677195
+        lon:
+          type: string
+          example: -6.397099
+        date:
+          type: string
+          format: date-time
+      xml:
+        name: Position
+    Statistics:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        steps:
+          type: integer
+          format: int64
+          example: 9999
+        avgSteps:
+          type: integer
+          format: int64
+          example: 5000
+        kms:
+          type: number
+        AvgKms:
+          type: number
+        AvgActivity:
+          type: number
+        statsDate:
+          type: string
+          format: date-time
+      xml:
+        name: Order
+    User:
+      required:
+      - email
+      - fisrtName
+      - id
+      - lastName
+      - password
+      - phone
+      - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        username:
+          type: string
+          example: antGar
+        firstName:
+          type: string
+          example: Antonio
+        lastName:
+          type: string
+          example: Garcia
+        email:
+          type: string
+          example: antgar@example.es
+        password:
+          type: string
+          example: xxxxxxxxx
+        phone:
+          type: string
+          example: +34 666666666
+      xml:
+        name: User
+    Device:
+      required:
+      - model
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abuela
+        model:
+          type: string
+          example: SmartStick_v1
