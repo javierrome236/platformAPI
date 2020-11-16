@@ -1,0 +1,291 @@
+openapi: 3.0.0
+info:
+  title: PlatformAPI
+  description: |
+    API de la plataforma web
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/javierrome/PlatformAPI/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: statistics
+  description: Todo sobre tus estadísticas de actividad
+- name: user
+  description: Operaciones sobre el usuario
+paths:
+  /statistics/{userId}:
+    get:
+      tags:
+      - statistics
+      summary: Devuelve las estadísticas de actividad de un usuario
+      operationId: get_activity_statistics
+      parameters:
+      - name: userId
+        in: path
+        description: id del usuario cuyas estadísticas se van consultar
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: estadisticas encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+        "404":
+          description: estadisticas no encontradas en el sistema
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
+  /statistics/device/{deviceId}:
+    post:
+      tags:
+      - statistics
+      summary: añade un nuevo dispositivo a la cuenta
+      operationId: post_device
+      parameters:
+      - name: deviceId
+        in: path
+        description: id del dispositivo añadido
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Device'
+      responses:
+        "200":
+          description: dispositivo añadido
+        "400":
+          description: datos del dispositivo incorrectos
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
+  /statistics/device/liveTime/{deviceId}:
+    get:
+      tags:
+      - statistics
+      summary: Devuelve posición actual del dispositivo
+      operationId: get_live_time_position
+      parameters:
+      - name: deviceId
+        in: path
+        description: id del dispositivo del que se quiere obtener la localización
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: dispositivo encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        "404":
+          description: dispositivo no encontrado en el sistema
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
+  /user:
+    post:
+      tags:
+      - user
+      summary: Crea un nuevo usuario en el sistema
+      operationId: create_user
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Obtiene el usuario por el nombre de usuario
+      operationId: get_user_by_name
+      parameters:
+      - name: username
+        in: path
+        description: nombre de usuario
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Nombre de usuario no valido
+        "404":
+          description: Usuario no encontrado
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Actualiza los datos del usuario
+      operationId: update_user
+      parameters:
+      - name: username
+        in: path
+        description: nombre del usuario que va a ser actualizado
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Usuario actualizado
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "400":
+          description: Usuario no valido
+        "404":
+          description: Usuario no encontrado
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+components:
+  schemas:
+    Position:
+      required:
+      - date
+      - device
+      - lat
+      - lon
+      type: object
+      properties:
+        device:
+          type: integer
+          format: int64
+          example: 12345
+        lat:
+          type: string
+          example: "38.677195"
+        lon:
+          type: string
+          example: -6.397099
+        date:
+          type: string
+          format: date-time
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        lon: -6.397099
+        device: 12345
+        lat: "38.677195"
+      xml:
+        name: Position
+    Statistics:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        steps:
+          type: integer
+          format: int64
+          example: 9999
+        avgSteps:
+          type: integer
+          format: int64
+          example: 5000
+        kms:
+          type: number
+        AvgKms:
+          type: number
+        AvgActivity:
+          type: number
+        statsDate:
+          type: string
+          format: date-time
+      example:
+        kms: 0.80082819046101150206595775671303272247314453125
+        statsDate: 2000-01-23T04:56:07.000+00:00
+        AvgKms: 6.02745618307040320615897144307382404804229736328125
+        avgSteps: 5000
+        id: 12345
+        AvgActivity: 1.46581298050294517310021547018550336360931396484375
+        steps: 9999
+      xml:
+        name: Order
+    User:
+      required:
+      - email
+      - fisrtName
+      - id
+      - lastName
+      - password
+      - phone
+      - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        username:
+          type: string
+          example: antGar
+        firstName:
+          type: string
+          example: Antonio
+        lastName:
+          type: string
+          example: Garcia
+        email:
+          type: string
+          example: antgar@example.es
+        password:
+          type: string
+          example: xxxxxxxxx
+        phone:
+          type: string
+          example: +34 666666666
+      example:
+        firstName: Antonio
+        lastName: Garcia
+        password: xxxxxxxxx
+        phone: +34 666666666
+        id: 12345
+        email: antgar@example.es
+        username: antGar
+      xml:
+        name: User
+    Device:
+      required:
+      - model
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: Abuela
+        model:
+          type: string
+          example: SmartStick_v1
+
