@@ -19,7 +19,7 @@ def get_activity_statistics(user_id):  # noqa: E501
     :rtype: Statistics
     """
     
-    return new Statistics(user_id,9999,5000,6.8,3.4,2.5,datetime.datetime.now())
+    return Statistics(user_id,9999,5000,6.8,3.4,2.5,datetime.datetime.now())
 
 
 def get_live_time_position(device_id):  # noqa: E501
