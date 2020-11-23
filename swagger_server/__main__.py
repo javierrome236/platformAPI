@@ -10,7 +10,7 @@ def main():
     app.url_map.strict_slashes = False
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'PlatformAPI'}, pythonic_params=True)
-    app.run(host='localhost',port=8080)
+    app.run(port=8080)
 
 
 if __name__ == '__main__':
