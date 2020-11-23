@@ -7,7 +7,6 @@ from swagger_server import encoder
 
 def main():
     app = connexion.App(__name__, specification_dir='./swagger/')
-    app.url_map.strict_slashes = False
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'PlatformAPI'}, pythonic_params=True)
     app.run(port=8080)
