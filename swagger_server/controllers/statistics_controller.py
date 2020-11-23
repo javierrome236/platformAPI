@@ -1,5 +1,6 @@
 import connexion
 import six
+import datetime
 
 from swagger_server.models.device import Device  # noqa: E501
 from swagger_server.models.position import Position  # noqa: E501
@@ -16,8 +17,17 @@ def get_activity_statistics(user_id):  # noqa: E501
     :type user_id: int
 
     :rtype: Statistics
-    """
-    return 'do some magic!'
+    """{
+  "id": 12345,
+  "steps": 9999,
+  "avgSteps": 5000,
+  "kms": "6,8",
+  "AvgKms": "3,4",
+  "AvgActivity": "2,5",
+  "statsDate": "1/1/2020"
+}
+    
+    return new Statistics(user_id,9999,5000,6.8,3.4,2.5,datetime.datetime.now())
 
 
 def get_live_time_position(device_id):  # noqa: E501
