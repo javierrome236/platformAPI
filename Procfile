@@ -1,1 +1,1 @@
-web: gunicorn gettingstarted.wsgi --log-file -
+web: pip install connexion[swagger-ui] && python3 -m swagger_server
