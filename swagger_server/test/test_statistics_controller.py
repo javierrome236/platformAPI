@@ -19,9 +19,11 @@ class TestStatisticsController(BaseTestCase):
 
         Devuelve las estadísticas de actividad de un usuario
         """
+        query_string = [('user_id', 56)]
         response = self.client.open(
-            '/javierrome/PlatformAPI/1.0.0/statistics/{userId}'.format(user_id=56),
-            method='GET')
+            '/javierrome/PlatformAPI/1.0.0/statistics',
+            method='GET',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -43,7 +45,7 @@ class TestStatisticsController(BaseTestCase):
         """
         body = Device()
         response = self.client.open(
-            '/javierrome/PlatformAPI/1.0.0/statistics/device/{deviceId}'.format(device_id=56),
+            '/javierrome/PlatformAPI/1.0.0/statistics/device/',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')

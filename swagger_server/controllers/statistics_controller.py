@@ -1,6 +1,5 @@
 import connexion
 import six
-import datetime
 
 from swagger_server.models.device import Device  # noqa: E501
 from swagger_server.models.position import Position  # noqa: E501
@@ -18,8 +17,7 @@ def get_activity_statistics(user_id):  # noqa: E501
 
     :rtype: Statistics
     """
-    
-    return Statistics(user_id,9999,5000,6.8,3.4,2.5,datetime.datetime.now())
+    return 'do some magic!'
 
 
 def get_live_time_position(device_id):  # noqa: E501
@@ -35,13 +33,11 @@ def get_live_time_position(device_id):  # noqa: E501
     return 'do some magic!'
 
 
-def post_device(device_id, body=None):  # noqa: E501
+def post_device(body=None):  # noqa: E501
     """añade un nuevo dispositivo a la cuenta
 
      # noqa: E501
 
-    :param device_id: id del dispositivo añadido
-    :type device_id: int
     :param body: 
     :type body: dict | bytes
 

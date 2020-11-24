@@ -16,7 +16,7 @@ tags:
 - name: user
   description: Operaciones sobre el usuario
 paths:
-  /statistics/{userId}:
+  /statistics:
     get:
       tags:
       - statistics
@@ -24,10 +24,10 @@ paths:
       operationId: get_activity_statistics
       parameters:
       - name: userId
-        in: path
+        in: query
         description: id del usuario cuyas estadísticas se van consultar
         required: true
-        style: simple
+        style: form
         explode: false
         schema:
           type: integer
@@ -42,22 +42,12 @@ paths:
         "404":
           description: estadisticas no encontradas en el sistema
       x-openapi-router-controller: swagger_server.controllers.statistics_controller
-  /statistics/device/{deviceId}:
+  /statistics/device/:
     post:
       tags:
       - statistics
       summary: añade un nuevo dispositivo a la cuenta
       operationId: post_device
-      parameters:
-      - name: deviceId
-        in: path
-        description: id del dispositivo añadido
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
-          format: int32
       requestBody:
         content:
           application/json:
@@ -236,7 +226,7 @@ components:
     User:
       required:
       - email
-      - firstName
+      - fisrtName
       - id
       - lastName
       - password
