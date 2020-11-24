@@ -268,7 +268,7 @@ components:
     User:
       required:
       - email
-      - fisrtName
+      - firstName
       - id
       - lastName
       - password
