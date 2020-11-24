@@ -14,6 +14,19 @@ from swagger_server.test import BaseTestCase
 class TestStatisticsController(BaseTestCase):
     """StatisticsController integration test stubs"""
 
+    def test_delete_device(self):
+        """Test case for delete_device
+
+        borra un dispositivo de la cuenta
+        """
+        query_string = [('device_id', 56)]
+        response = self.client.open(
+            '/javierrome/PlatformAPI/1.0.0/statistics/device/',
+            method='DELETE',
+            query_string=query_string)
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_get_activity_statistics(self):
         """Test case for get_activity_statistics
 

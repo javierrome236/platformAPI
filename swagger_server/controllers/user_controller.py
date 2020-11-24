@@ -20,6 +20,19 @@ def create_user(body):  # noqa: E501
     return 'do some magic!'
 
 
+def delete_user(username):  # noqa: E501
+    """dar de baja un usuario en el sistema
+
+     # noqa: E501
+
+    :param username: id del usuario a borrar
+    :type username: int
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
 def get_user_by_name(username):  # noqa: E501
     """Obtiene el usuario por el nombre de usuario
 

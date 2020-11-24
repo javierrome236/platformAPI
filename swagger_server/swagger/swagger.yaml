@@ -59,6 +59,27 @@ paths:
         "400":
           description: datos del dispositivo incorrectos
       x-openapi-router-controller: swagger_server.controllers.statistics_controller
+    delete:
+      tags:
+      - statistics
+      summary: borra un dispositivo de la cuenta
+      operationId: delete_device
+      parameters:
+      - name: deviceId
+        in: query
+        description: id del dispositivo a borrar
+        required: true
+        style: form
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: dispositivo borrado
+        "400":
+          description: id del dispositivo incorrecto
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
   /statistics/device/liveTime/{deviceId}:
     get:
       tags:
@@ -158,6 +179,27 @@ paths:
           description: Usuario no valido
         "404":
           description: Usuario no encontrado
+      x-openapi-router-controller: swagger_server.controllers.user_controller
+    delete:
+      tags:
+      - user
+      summary: dar de baja un usuario en el sistema
+      operationId: delete_user
+      parameters:
+      - name: username
+        in: path
+        description: id del usuario a borrar
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: usuario borrado
+        "400":
+          description: id del usuario incorrecto
       x-openapi-router-controller: swagger_server.controllers.user_controller
 components:
   schemas:

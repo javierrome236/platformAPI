@@ -26,6 +26,17 @@ class TestUserController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_delete_user(self):
+        """Test case for delete_user
+
+        dar de baja un usuario en el sistema
+        """
+        response = self.client.open(
+            '/javierrome/PlatformAPI/1.0.0/user/{username}'.format(username=56),
+            method='DELETE')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
     def test_get_user_by_name(self):
         """Test case for get_user_by_name
 

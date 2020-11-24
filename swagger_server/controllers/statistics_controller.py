@@ -7,6 +7,19 @@ from swagger_server.models.statistics import Statistics  # noqa: E501
 from swagger_server import util
 
 
+def delete_device(device_id):  # noqa: E501
+    """borra un dispositivo de la cuenta
+
+     # noqa: E501
+
+    :param device_id: id del dispositivo a borrar
+    :type device_id: int
+
+    :rtype: None
+    """
+    return 'do some magic!'
+
+
 def get_activity_statistics(user_id):  # noqa: E501
     """Devuelve las estadísticas de actividad de un usuario
 
