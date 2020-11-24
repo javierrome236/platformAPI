@@ -180,10 +180,10 @@ components:
           example: 12345
         lat:
           type: string
-          example: 38.677195
+          example: "38.677195"
         lon:
           type: string
-          example: -6.397099
+          example: "-6.397099"
         date:
           type: string
           format: date-time
