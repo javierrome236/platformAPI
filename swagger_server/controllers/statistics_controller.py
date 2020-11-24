@@ -18,7 +18,7 @@ def delete_device(device_id):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    return 'OK'
 
 
 def get_activity_statistics(user_id):  # noqa: E501
@@ -44,7 +44,7 @@ def get_live_time_position(device_id):  # noqa: E501
 
     :rtype: Position
     """
-    return 'do some magic!'
+    return Position(device_id,"39.4787526","-6.3422524",datetime.datetime.now())
 
 
 def post_device(body=None):  # noqa: E501
@@ -59,4 +59,4 @@ def post_device(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Device.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    return 'OK'
