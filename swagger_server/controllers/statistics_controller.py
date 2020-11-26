@@ -65,9 +65,8 @@ def post_device(body=None):  # noqa: E501
 
     if connexion.request.is_json:
         body = Device.from_dict(connexion.request.get_json())  # noqa: E501
-        dev = Device.from_dict(connexion.request.get_json()
         codification_data={
-            'person_id': dev.name,
+            'person_id': body.name,
             'codification': 125
         }
         lol.insert_one(codification_data)
