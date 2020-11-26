@@ -46,7 +46,7 @@ def delete_user(username):  # noqa: E501
     :rtype: None
     """
     collection = db.user
-    collection.deleteOne( { 'username': str(username) } )
+    collection.delete_one( { 'username': str(username) } )
     return 'OK'
 
 
