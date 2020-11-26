@@ -193,8 +193,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: integer
-          format: int32
+          type: string
       responses:
         "200":
           description: usuario borrado

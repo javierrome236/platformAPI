@@ -26,7 +26,7 @@
     }
   ],
   "paths": {
-    "/statistics/{userId}": {
+    "/statistics": {
       "get": {
         "tags": [
           "statistics"
@@ -36,10 +36,10 @@
         "parameters": [
           {
             "name": "userId",
-            "in": "path",
+            "in": "query",
             "description": "id del usuario cuyas estadísticas se van consultar",
             "required": true,
-            "style": "simple",
+            "style": "form",
             "explode": false,
             "schema": {
               "type": "integer",
@@ -64,27 +64,13 @@
         }
       }
     },
-    "/statistics/device/{deviceId}": {
+    "/statistics/device/": {
       "post": {
         "tags": [
           "statistics"
         ],
         "summary": "añade un nuevo dispositivo a la cuenta",
         "operationId": "postDevice",
-        "parameters": [
-          {
-            "name": "deviceId",
-            "in": "path",
-            "description": "id del dispositivo añadido",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -100,6 +86,35 @@
           },
           "400": {
             "description": "datos del dispositivo incorrectos"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "borra un dispositivo de la cuenta",
+        "operationId": "deleteDevice",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "description": "id del dispositivo a borrar",
+            "required": true,
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "dispositivo borrado"
+          },
+          "400": {
+            "description": "id del dispositivo incorrecto"
           }
         }
       }
@@ -247,6 +262,34 @@
           },
           "404": {
             "description": "Usuario no encontrado"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "dar de baja un usuario en el sistema",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "id del usuario a borrar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "usuario borrado"
+          },
+          "400": {
+            "description": "id del usuario incorrecto"
           }
         }
       }
