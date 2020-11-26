@@ -25,8 +25,8 @@ def create_user(body):  # noqa: E501
         user_data={
             'id': body.id,
             'username': body.username,
-            'firstName': body.firstName,
-            'lastName': body.lastName,
+            'firstName': body.first_name,
+            'lastName': body.last_name,
             'email': body.email,
             'password': body.password,
             'phone': body.phone
