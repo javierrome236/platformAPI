@@ -1,8 +1,12 @@
 import connexion
 import six
+import pymongo
 
 from swagger_server.models.user import User  # noqa: E501
 from swagger_server import util
+
+client = pymongo.MongoClient("mongodb+srv://test:test@cluster0.m8mga.mongodb.net/test?retryWrites=true&w=majority")
+db=client.get_database('ist')
 
 
 def create_user(body):  # noqa: E501
@@ -17,7 +21,18 @@ def create_user(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = User.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        collection = db.user
+        user_data={
+            'id': body.id,
+            'username': body.username,
+            'firstName': body.firstName,
+            'lastName': body.lastName,
+            'email': body.email,
+            'password': body.password,
+            'phone': body.phone
+        }
+        collection.insert_one(user_data)
+    return 'OK'
 
 
 def delete_user(username):  # noqa: E501
@@ -30,7 +45,9 @@ def delete_user(username):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    collection = db.user
+    collection.deleteOne( { username: username } )
+    return 'OK'
 
 
 def get_user_by_name(username):  # noqa: E501
@@ -43,7 +60,9 @@ def get_user_by_name(username):  # noqa: E501
 
     :rtype: User
     """
-    return 'do some magic!'
+    collection = db.user
+    u = collection.find_one( { username: username } )
+    return User(u['id'],u['username'],u['firstName'],u['lastName'],u['email'],u['password'],u['phone'])
 
 
 def update_user(body, username):  # noqa: E501
@@ -60,4 +79,15 @@ def update_user(body, username):  # noqa: E501
     """
     if connexion.request.is_json:
         body = User.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        collection = db.user
+        myquery = { "username": username }
+        newvalues = { "$set": { 'id': body.id,
+            'username': body.username,
+            'firstName': body.firstName,
+            'lastName': body.lastName,
+            'email': body.email,
+            'password': body.password,
+            'phone': body.phone} }
+
+        collection.update_one(myquery, newvalues)
+    return 'OK'

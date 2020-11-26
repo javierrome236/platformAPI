@@ -9,8 +9,8 @@ from swagger_server.models.statistics import Statistics  # noqa: E501
 from swagger_server import util
 
 client = pymongo.MongoClient("mongodb+srv://test:test@cluster0.m8mga.mongodb.net/test?retryWrites=true&w=majority")
-db=client.get_database('prueba')
-lol = db.pru
+db=client.get_database('ist')
+
 
 
 def delete_device(device_id):  # noqa: E501
@@ -65,9 +65,10 @@ def post_device(body=None):  # noqa: E501
 
     if connexion.request.is_json:
         body = Device.from_dict(connexion.request.get_json())  # noqa: E501
-        codification_data={
-            'person_id': body.name,
-            'codification': 125
+        collection = db.devices
+        device_data={
+            'name': body.name,
+            'model': body.model
         }
-        lol.insert_one(codification_data)
+        collection.insert_one(device_data)
     return 'OK'
