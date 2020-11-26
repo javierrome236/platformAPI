@@ -83,8 +83,8 @@ def update_user(body, username):  # noqa: E501
         myquery = { "username": username }
         newvalues = { "$set": { 'id': body.id,
             'username': body.username,
-            'firstName': body.firstName,
-            'lastName': body.lastName,
+            'firstName': body.first_name,
+            'lastName': body.last_name,
             'email': body.email,
             'password': body.password,
             'phone': body.phone} }
