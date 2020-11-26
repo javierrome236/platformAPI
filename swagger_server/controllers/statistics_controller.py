@@ -63,12 +63,12 @@ def post_device(body=None):  # noqa: E501
     :rtype: None
     """
 
-    codification_data={
-        'person_id': 55,
-        'codification': 125
-    }
-    lol.insert_one(codification_data)
-
     if connexion.request.is_json:
         body = Device.from_dict(connexion.request.get_json())  # noqa: E501
+        dev = Device.from_dict(connexion.request.get_json()
+        codification_data={
+            'person_id': dev.name,
+            'codification': 125
+        }
+        lol.insert_one(codification_data)
     return 'OK'
