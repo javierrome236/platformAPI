@@ -1,11 +1,16 @@
 import connexion
 import six
 import datetime
+import pymongo
 
 from swagger_server.models.device import Device  # noqa: E501
 from swagger_server.models.position import Position  # noqa: E501
 from swagger_server.models.statistics import Statistics  # noqa: E501
 from swagger_server import util
+
+client = pymongo.MongoClient("mongodb+srv://test:test@cluster0.m8mga.mongodb.net/test?retryWrites=true&w=majority")
+db=client.get_database('prueba')
+lol = db.pru
 
 
 def delete_device(device_id):  # noqa: E501
@@ -57,6 +62,13 @@ def post_device(body=None):  # noqa: E501
 
     :rtype: None
     """
+
+    codification_data={
+        'person_id': 55,
+        'codification': 125
+    }
+    lol.insert_one(codification_data)
+
     if connexion.request.is_json:
         body = Device.from_dict(connexion.request.get_json())  # noqa: E501
     return 'OK'
