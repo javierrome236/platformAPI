@@ -46,7 +46,7 @@ def delete_user(username):  # noqa: E501
     :rtype: None
     """
     collection = db.user
-    collection.deleteOne( { username: username } )
+    collection.deleteOne( { 'username': str(username) } )
     return 'OK'
 
 
@@ -61,7 +61,7 @@ def get_user_by_name(username):  # noqa: E501
     :rtype: User
     """
     collection = db.user
-    u = collection.find_one( { username: username } )
+    u = collection.find_one( { 'username': str(username) } )
     return User(u['id'],u['username'],u['firstName'],u['lastName'],u['email'],u['password'],u['phone'])
 
 
