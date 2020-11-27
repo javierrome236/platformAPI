@@ -2,6 +2,7 @@ import connexion
 import six
 import datetime
 import pymongo
+import request
 
 from swagger_server.models.device import Device  # noqa: E501
 from swagger_server.models.position import Position  # noqa: E501
@@ -36,7 +37,11 @@ def get_activity_statistics(user_id):  # noqa: E501
 
     :rtype: Statistics
     """
-    return Statistics(user_id,9999,5000,6.8,3.4,2.5,datetime.datetime.now())
+    time = requests.get('https://stickapi-jaime.herokuapp.com/JaimeAlvarado/Stick/1.0.0/inactivity?idDevice=23')
+    time = time.json()['message']
+    steps = requests.get('https://stickapi-jaime.herokuapp.com/JaimeAlvarado/Stick/1.0.0/steps?idDevice=22')
+    steps = steps.json()['message']
+    return Statistics(user_id,steps,5000,6.8,3.4,time,datetime.datetime.now())
 
 
 def get_live_time_position(device_id):  # noqa: E501
@@ -49,7 +54,9 @@ def get_live_time_position(device_id):  # noqa: E501
 
     :rtype: Position
     """
-    return Position(device_id,"39.4787526","-6.3422524",datetime.datetime.now())
+    position = requests.get('https://wristbandapi-jaime.herokuapp.com/JaimeAlvarado/WristBand/1.0.0/localization?idWrist=4')
+    position = position.json()['message'].split(',')
+    return Position(device_id,position[0],position[1],datetime.datetime.now())
 
 
 def post_device(body=None):  # noqa: E501
