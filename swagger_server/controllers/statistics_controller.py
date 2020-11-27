@@ -2,7 +2,7 @@ import connexion
 import six
 import datetime
 import pymongo
-import request
+import requests
 
 from swagger_server.models.device import Device  # noqa: E501
 from swagger_server.models.position import Position  # noqa: E501
