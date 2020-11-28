@@ -123,7 +123,7 @@ def update_statistic(body, statistic):  # noqa: E501
     if connexion.request.is_json:
         body = Statistics.from_dict(connexion.request.get_json())  # noqa: E501
         collection = db.statistics
-        myquery = { "username": statistic }
+        myquery = { "id": statistic }
         newvalues = { "$set": { 'id': body.id,
             'steps': body.steps,
             'avg_steps': body.avg_steps,
