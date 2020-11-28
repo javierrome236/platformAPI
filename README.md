@@ -34,6 +34,7 @@ To launch the integration tests, use tox:
 ```
 sudo pip install tox
 tox
+
 ```
 
 ## Running with Docker
