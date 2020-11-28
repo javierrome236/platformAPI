@@ -42,6 +42,51 @@ paths:
         "404":
           description: estadisticas no encontradas en el sistema
       x-openapi-router-controller: swagger_server.controllers.statistics_controller
+    put:
+      tags:
+      - statistics
+      summary: Actualiza los datos de una actividad
+      operationId: update_statistic
+      parameters:
+      - name: statistic
+        in: query
+        description: id de la estadistica que va a ser actualizada
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: Estadistica actualizada
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Statistics'
+        required: true
+      responses:
+        "200":
+          description: Estadistica actualizada
+        "400":
+          description: Estadistica no valida
+        "404":
+          description: Estadistica no encontrada
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
+    post:
+      tags:
+      - statistics
+      summary: añade un nueva actividad
+      operationId: post_statistic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Statistics'
+      responses:
+        "200":
+          description: actividad añadido
+        "400":
+          description: datos incorrectos
+      x-openapi-router-controller: swagger_server.controllers.statistics_controller
   /statistics/device/:
     post:
       tags:
@@ -175,6 +220,8 @@ paths:
               $ref: '#/components/schemas/User'
         required: true
       responses:
+        "200":
+          description: Usuario actualizado
         "400":
           description: Usuario no valido
         "404":

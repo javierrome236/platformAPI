@@ -79,3 +79,58 @@ def post_device(body=None):  # noqa: E501
         }
         collection.insert_one(device_data)
     return 'OK'
+
+
+
+def post_statistic(body=None):  # noqa: E501
+    """añade un nueva actividad
+
+     # noqa: E501
+
+    :param body: 
+    :type body: dict | bytes
+
+    :rtype: None
+    """
+    if connexion.request.is_json:
+        body = Statistics.from_dict(connexion.request.get_json())  # noqa: E501
+        collection = db.statistics
+        stats_data={
+            'id': body.id,
+            'steps': body.steps,
+            'avg_steps': body.avg_steps,
+            'kms': body.kms,
+            'avg_kms': body.avg_kms,
+            'avg_activity': body.avg_activity,
+            'stats_date': str(datetime.datetime.now())
+        }
+        collection.insert_one(stats_data)
+    return 'OK'
+
+
+def update_statistic(body, statistic):  # noqa: E501
+    """Actualiza los datos de una actividad
+
+     # noqa: E501
+
+    :param body: Estadistica actualizada
+    :type body: dict | bytes
+    :param statistic: id de la estadistica que va a ser actualizada
+    :type statistic: str
+
+    :rtype: None
+    """
+    if connexion.request.is_json:
+        body = Statistics.from_dict(connexion.request.get_json())  # noqa: E501
+        collection = db.statistics
+        myquery = { "username": statistic }
+        newvalues = { "$set": { 'id': body.id,
+            'steps': body.steps,
+            'avg_steps': body.avg_steps,
+            'kms': body.kms,
+            'avg_kms': body.avg_kms,
+            'avg_activity': body.avg_activity,
+            'stats_date': str(datetime.datetime.now())} }
+
+        collection.update_one(myquery, newvalues)
+    return 'OK'

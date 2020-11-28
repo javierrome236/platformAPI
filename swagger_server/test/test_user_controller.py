@@ -32,7 +32,7 @@ class TestUserController(BaseTestCase):
         dar de baja un usuario en el sistema
         """
         response = self.client.open(
-            '/javierrome/PlatformAPI/1.0.0/user/{username}'.format(username=56),
+            '/javierrome/PlatformAPI/1.0.0/user/{username}'.format(username='username_example'),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

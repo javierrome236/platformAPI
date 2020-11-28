@@ -65,6 +65,36 @@ class TestStatisticsController(BaseTestCase):
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
+    def test_post_statistic(self):
+        """Test case for post_statistic
+
+        añade un nueva actividad
+        """
+        body = Statistics()
+        response = self.client.open(
+            '/javierrome/PlatformAPI/1.0.0/statistics',
+            method='POST',
+            data=json.dumps(body),
+            content_type='application/json')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_update_statistic(self):
+        """Test case for update_statistic
+
+        Actualiza los datos de una actividad
+        """
+        body = Statistics()
+        query_string = [('statistic', 'statistic_example')]
+        response = self.client.open(
+            '/javierrome/PlatformAPI/1.0.0/statistics',
+            method='PUT',
+            data=json.dumps(body),
+            content_type='application/json',
+            query_string=query_string)
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
 
 if __name__ == '__main__':
     import unittest

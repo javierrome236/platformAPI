@@ -62,6 +62,72 @@
             "description": "estadisticas no encontradas en el sistema"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "Actualiza los datos de una actividad",
+        "operationId": "updateStatistic",
+        "parameters": [
+          {
+            "name": "statistic",
+            "in": "query",
+            "description": "id de la estadistica que va a ser actualizada",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Estadistica actualizada",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Statistics"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Estadistica actualizada"
+          },
+          "400": {
+            "description": "Estadistica no valida"
+          },
+          "404": {
+            "description": "Estadistica no encontrada"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "statistics"
+        ],
+        "summary": "añade un nueva actividad",
+        "operationId": "postStatistic",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Statistics"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "actividad añadido"
+          },
+          "400": {
+            "description": "datos incorrectos"
+          }
+        }
       }
     },
     "/statistics/device/": {
@@ -257,6 +323,9 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Usuario actualizado"
+          },
           "400": {
             "description": "Usuario no valido"
           },
